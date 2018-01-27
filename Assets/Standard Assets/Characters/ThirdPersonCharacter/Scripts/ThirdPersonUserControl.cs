@@ -12,10 +12,17 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+        enum Players { Player1Virus, Player2Medic };
 
-        
+      
+
         private void Start()
         {
+
+            Players myPlayers;
+
+           // myPlayers = Players.North;
+
             // get the transform of the main camera
             if (Camera.main != null)
             {

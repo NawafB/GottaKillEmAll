@@ -13,9 +13,9 @@ namespace UnityStandardAssets.Cameras
         // 		Pivot
         // 			Camera
 
-        protected Transform m_Cam; // the transform of the camera
-        protected Transform m_Pivot; // the point at which the camera pivots around
-        protected Vector3 m_LastTargetPosition;
+        public Transform m_Cam; // the transform of the camera
+        public Transform m_Pivot; // the point at which the camera pivots around
+        public Vector3 m_LastTargetPosition;
 
 
         protected virtual void Awake()
