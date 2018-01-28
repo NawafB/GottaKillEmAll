@@ -13,8 +13,7 @@ public class MyPlayer : MonoBehaviour
     Renderer cachedRenderer;
     Rigidbody m_rigidbody;
     [Range(0, 50)] public float walkspeed = 10f;
-    OneAxisInputControl rightStickX;
-    OneAxisInputControl rightStickY;
+    Vision m_Vision;
 
     public enum PlayersEnum { Player1Virus, Player2Medic };
     public PlayersEnum myPlayersEnum = PlayersEnum.Player2Medic;
@@ -23,6 +22,7 @@ public class MyPlayer : MonoBehaviour
 
     public void Start()
     {
+        m_Vision = GetComponentInChildren<Vision>();
         m_rigidbody = GetComponent<Rigidbody>();
         cachedRenderer = GetComponent<Renderer>();
 
@@ -57,7 +57,40 @@ public class MyPlayer : MonoBehaviour
 
             if (Device.Action1.WasPressed)
             {
-                print("hellos ");
+                if (myPlayersEnum == 0)
+                {
+                    foreach (GameObject targetHuman in m_Vision.visibleObjects)
+                    {
+                        if (!targetHuman.GetComponent<Human>().infected && !targetHuman.GetComponent<Human>().dead)
+                        {
+                            targetHuman.GetComponent<Human>().Infected();
+                            print(this.name + " infected " + targetHuman.name);
+                        }
+                    }
+
+
+                }
+                if (myPlayersEnum != 0)
+                {
+                    foreach (GameObject target in m_Vision.visibleObjects)
+                    {
+                        if (target.gameObject.tag == "Human")
+                        {
+                            target.GetComponent<Human>().Heal();
+                            print(this.name + " Healed " + target.name);
+                        }
+                        else if (target.gameObject.tag == "Virus")
+                        {
+                            VirusFrozen();
+                            print("frozen");
+                        }
+
+                    }
+
+                }
+
+
+                //  print("Do!");
             }
 
 
@@ -84,6 +117,15 @@ public class MyPlayer : MonoBehaviour
         GameObject mCam = GameObject.FindGameObjectWithTag("MCam");
         mCam.GetComponent<AutoCam>().Target = this.transform;
     }
+
+
+
+    public void VirusFrozen()
+    {
+
+
+    }
+
 }
 
 

@@ -120,7 +120,7 @@ public class MyPlayerManager : MonoBehaviour {
 
             }
 
-            var instPlayer = (GameObject)Instantiate(playerPrefab, new Vector3 (0,1,0), Quaternion.identity);
+            var instPlayer = (GameObject)Instantiate(playerPrefab, new Vector3 (Random.Range(-5,5) ,1, Random.Range(-5, 5)), Quaternion.identity);
             var player = instPlayer.GetComponent<MyPlayer>();
             player.Device = inputDevice;
             playersList.Add(player);
@@ -154,5 +154,6 @@ public class MyPlayerManager : MonoBehaviour {
             y += h;
         }
     }
+
 }
 
