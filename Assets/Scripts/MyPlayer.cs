@@ -12,6 +12,7 @@ public class MyPlayer : MonoBehaviour
 
     Renderer cachedRenderer;
     Rigidbody m_rigidbody;
+    Animator m_animator;
     [Range(0, 50)] public float walkspeed = 10f;
     Vision m_Vision;
 
@@ -25,6 +26,7 @@ public class MyPlayer : MonoBehaviour
         m_Vision = GetComponentInChildren<Vision>();
         m_rigidbody = GetComponent<Rigidbody>();
         cachedRenderer = GetComponent<Renderer>();
+        m_animator = GetComponentInChildren<Animator>();
 
         if (myPlayersEnum == 0)
         {
@@ -57,6 +59,7 @@ public class MyPlayer : MonoBehaviour
 
             if (Device.Action1.WasPressed)
             {
+                m_animator.SetTrigger("actionTrig");
                 if (myPlayersEnum == 0)
                 {
                     foreach (GameObject targetHuman in m_Vision.visibleObjects)
@@ -99,7 +102,13 @@ public class MyPlayer : MonoBehaviour
             // transform.Rotate(Vector3.down, 500.0f * Time.deltaTime * Device.Direction.X, Space.World);
             // transform.Rotate(Vector3.right, 500.0f * Time.deltaTime * Device.Direction.Y, Space.World);
         }
-        transform.forward = new Vector3(Device.Direction.X, 0, Device.Direction.Y);
+        if (Device.Direction.Value != null)
+        {
+            transform.forward = new Vector3(Device.Direction.X, 0, Device.Direction.Y);
+        } else
+        {
+            Debug.Log(this.name + " Doesnt have a controller assigned because already in scene");
+        }
         Debug.DrawRay(transform.position, transform.forward);
     }
 
